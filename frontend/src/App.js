@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import Tasks from "./Components/Tasks";
 function App() {
   const inputText = useRef("");
-  const apiUrl = "http://localhost:8080";
+  const apiUrl = "http://localhost:8080";  //hardcoding ports is bad
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ function App() {
         <p>Task Management Slightly Modified</p>
       </header>
       <form onSubmit={onSubmit}>
-        <input ref={inputText} type="text" placeholder="what you have to do" />
+        <input ref={inputText} type="text" placeholder="describe the task" />
         &nbsp; <button>Save Task</button>
       </form>
       <Tasks tasks={tasks} />
