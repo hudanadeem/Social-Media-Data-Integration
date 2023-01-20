@@ -3,7 +3,9 @@ import { useRef, useState, useEffect } from "react";
 import Tasks from "./Components/Tasks";
 function App() {
   const inputText = useRef("");
-  const apiUrl = "http://localhost:8080";  //hardcoding ports is bad
+  const apiUrl = process.env.REACT_APP_BACKEND;  
+  //const apiUrl = "http://localhost:8080"; 
+
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {

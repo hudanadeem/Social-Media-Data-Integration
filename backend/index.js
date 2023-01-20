@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 var cors = require("cors");
 
-const PORT = 8080;
+const PORT = process.env.PORT;
 const app = express();
 const TaskModel = require("./models/task");
 
@@ -47,11 +47,11 @@ app.post("/task", async (req, res) => {
 });
 
 mongoose.connect(
-  "mongodb://host.docker.internal:27017/task-management",
+  process.env.MONGO,
   {
     auth: {
-      username: "anas",
-      password: "12345",
+      username: process.env.MUSER,
+      password: process.env.MPWD,
     },
     authSource: "admin",
     useNewUrlParser: true,
