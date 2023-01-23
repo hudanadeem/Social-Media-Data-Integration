@@ -6,6 +6,7 @@ function App() {
   const inputText = useRef("");
   let apiUrl = "";
 
+  // hi frontend
   console.log(
     `process ${process.env.REACT_APP_SERVER_BASE} + process ${process.env.REACT_APP_SERVER_PORT}`
   );

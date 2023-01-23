@@ -2,15 +2,7 @@
   "name": "Task Management Frontend",
 
   "dockerComposeFile": ["../../docker-compose.yaml"],
-
   "service": "frontend",
 
-  "workspaceFolder": "/app/frontend",
-
-  "features": {
-    "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/features/common-utils:2": {
-      "configureZshAsDefaultShell": true
-    }
-  }
+  "workspaceFolder": "/frontend"
 }
