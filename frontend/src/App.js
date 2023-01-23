@@ -1,10 +1,22 @@
 import "./App.css";
 import { useRef, useState, useEffect } from "react";
-import Tasks from "./Components/Tasks";
+import Tasks from "./components/Tasks";
+
 function App() {
   const inputText = useRef("");
-  const apiUrl = process.env.REACT_APP_BACKEND;  
-  //const apiUrl = "http://localhost:8080"; 
+  let apiUrl = "";
+
+  console.log(
+    `process ${process.env.REACT_APP_SERVER_BASE} + process ${process.env.REACT_APP_SERVER_PORT}`
+  );
+  if (
+    !process.env.REACT_APP_SERVER_BASE &&
+    !process.env.REACT_APP_SERVER_PORT
+  ) {
+    apiUrl = "http://localhost:8080";
+  } else {
+    apiUrl = `${process.env.REACT_APP_SERVER_BASE}:${process.env.REACT_APP_SERVER_PORT}`; // grabbing variables from a configmap is good!
+  }
 
   const [tasks, setTasks] = useState([]);
 

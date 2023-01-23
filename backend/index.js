@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 var cors = require("cors");
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
+
+console.log("Process port", process.env.PORT);
 const app = express();
 const TaskModel = require("./models/task");
 
@@ -46,24 +48,39 @@ app.post("/task", async (req, res) => {
   }
 });
 
-mongoose.connect(
-  process.env.MONGO,
-  {
-    auth: {
-      username: process.env.MUSER,
-      password: process.env.MPWD,
+const {
+  MONGO_USERNAME,
+  MONGO_PASSWORD,
+  MONGO_HOSTNAME,
+  MONGO_PORT,
+  MONGO_DATABASE_NAME,
+} = process.env;
+
+const MONGO_URI = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}`;
+
+console.log("MONGO URI", MONGO_URI);
+
+mongoose.set("strictQuery", false);
+
+mongoose
+  .connect(MONGO_URI, {
+    dbName: MONGO_DATABASE_NAME,
+    user: MONGO_USERNAME,
+    pass: MONGO_PASSWORD,
+  })
+  .then(
+    () => {
+      console.log(
+        `Running mongodb instance at port ${MONGO_PORT} and host ${MONGO_HOSTNAME}`
+      );
+
+      app.set("port", PORT);
+      app.listen(PORT, () => {
+        console.log(`Listening on port: ${PORT}`);
+      });
     },
-    authSource: "admin",
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  (err) => {
-    if (err) {
-      console.error("failed to connect to mongoDB");
+    (err) => {
+      console.error(`Unable to start mongo at ${MONGO_URI}`);
       console.error(err);
-    } else {
-      console.log("mongodb is running and secured");
-      app.listen(PORT);
     }
-  }
-);
+  );

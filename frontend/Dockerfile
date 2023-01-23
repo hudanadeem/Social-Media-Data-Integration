@@ -1,13 +1,19 @@
-FROM node
+FROM node:18-slim
 
-WORKDIR /app
+ARG NODE_ENV=production
+ENV NODE_ENV $NODE_ENV
 
-COPY package.json .
+ARG PORT=3000
+ENV PORT $PORT
+
+RUN npm i npm@latest -g
+
+WORKDIR /app/frontend
+
+COPY package.json package-lock.json ./
 
 RUN npm install
 
 COPY . .
 
-EXPOSE 3000
-
-CMD ["npm","start"]
+CMD [ "npm", "start" ]

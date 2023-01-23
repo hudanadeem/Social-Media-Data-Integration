@@ -6,7 +6,7 @@ services:
   # name is optional for our mongodb
   mymongodb:
     # since mongo is an offical image we can use it.
-    image: "mongo"
+    image: mongo:6
 
     # the port that we want to publish for mongodb
     ports:
@@ -18,22 +18,28 @@ services:
 
     # our environment variable
     environment:
-      MONGO_INITDB_ROOT_USERNAME: "anas"
-      MONGO_INITDB_ROOT_PASSWORD: "12345"
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+      - MONGO_INITDB_DATABASE=task-management
 
   # name is optional for our backend
   backend:
     # to build an image based on Dockerfile
     # it looks in this folder to find Dockerfile to build an image
-    build: ./backend
+    build:
+      context: ./backend
+
+    command: npm start
+
     # the port that we want to publish for backend
     ports:
       - "8080:8080"
     environment:
-      - PORT=8080
-      - MONGO=mongodb://host.docker.internal:27017/task-management
-      - MUSER=anas
-      - MPWD=12345
+      - MONGO_USERNAME=root
+      - MONGO_PASSWORD=example
+      - MONGO_HOSTNAME=host.docker.internal
+      - MONGO_PORT=27017
+      - MONGO_DATABASE_NAME=task-management
     # depends_on means it will start our backend container once mongo-container is  up and running.
     depends_on:
       - mymongodb
@@ -42,7 +48,10 @@ services:
   frontend:
     # to build an image based on Dockerfile
     # it looks in this folder to find Dockerfile to build an image
-    build: ./frontend
+    build:
+      context: ./frontend
+
+    command: npm start
 
     # the port that we want to publish for frontend
     ports:
@@ -50,13 +59,12 @@ services:
     # add bind mount volume to keep have updated source code
     volumes:
       - ./frontend/src:/app/src
+    environment:
+      - REACT_APP_SERVER_BASE=http://localhost
+      - REACT_APP_SERVER_PORT=8080
     # allow interactive mode
     stdin_open: true
     tty: true
-    environment:
-      - REACT_APP_BACKEND=http://localhost:8080
-    #env_file:
-     # - frontend.env
 
     # it will start our frontend container once backend-container is  up and running.
     depends_on:

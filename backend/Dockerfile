@@ -1,8 +1,13 @@
-FROM node
+FROM node:18-slim
 
-WORKDIR /app
+ARG PORT=8080
+ENV PORT $PORT
 
-COPY package.json .
+RUN npm i npm@latest -g
+
+WORKDIR /app/backend
+
+COPY package.json package-lock.json ./
 
 RUN npm install
 
