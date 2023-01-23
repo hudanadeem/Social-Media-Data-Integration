@@ -29,7 +29,11 @@ services:
     # the port that we want to publish for backend
     ports:
       - "8080:8080"
-
+    environment:
+      - PORT=8080
+      - MONGO=mongodb://host.docker.internal:27017/task-management
+      - MUSER=anas
+      - MPWD=12345
     # depends_on means it will start our backend container once mongo-container is  up and running.
     depends_on:
       - mymongodb
@@ -49,6 +53,10 @@ services:
     # allow interactive mode
     stdin_open: true
     tty: true
+    environment:
+      - REACT_APP_BACKEND=http://localhost:8080
+    #env_file:
+     # - frontend.env
 
     # it will start our frontend container once backend-container is  up and running.
     depends_on:
