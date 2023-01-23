@@ -1,0 +1,13 @@
+{
+  "name": "Task Management Backend",
+
+  "dockerComposeFile": ["../../docker-compose.yaml"],
+
+  "service": "backend",
+
+  "workspaceFolder": "/app/backend",
+
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  }
+}
