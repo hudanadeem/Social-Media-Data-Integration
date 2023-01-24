@@ -29,8 +29,8 @@ export async function getTasks() {
       tasks = data.tasks;
     }
   } catch (e) {
-    console.log("Unable to fetch tasks");
-    console.log(e);
+    console.error("Unable to fetch tasks");
+    console.error(e);
   }
 
   return tasks;
