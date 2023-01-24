@@ -1,8 +1,0 @@
-{
-  "name": "Task Management Frontend",
-
-  "dockerComposeFile": ["../../docker-compose.yaml"],
-  "service": "frontend",
-
-  "workspaceFolder": "/frontend"
-}

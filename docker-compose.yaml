@@ -34,17 +34,12 @@ services:
     # the port that we want to publish for backend
     ports:
       - "8080:8080"
-    volumes:
-      - ./backend:/backend
     environment:
       - MONGO_USERNAME=root
       - MONGO_PASSWORD=example
       - MONGO_HOSTNAME=host.docker.internal
       - MONGO_PORT=27017
       - MONGO_DATABASE_NAME=task-management
-    # allow interactive mode
-    stdin_open: true
-    tty: true
     # depends_on means it will start our backend container once mongo-container is  up and running.
     depends_on:
       - mymongodb
