@@ -2,33 +2,15 @@ import "./App.css";
 import { useRef, useState, useEffect } from "react";
 import Tasks from "./components/Tasks";
 
+import { getTasks, postNewTasks } from "./utils/api";
+
 function App() {
   const inputText = useRef("");
-  let apiUrl = "";
-
-  // hi frontend
-  console.log(
-    `process ${process.env.REACT_APP_SERVER_BASE} + process ${process.env.REACT_APP_SERVER_PORT}`
-  );
-  if (
-    !process.env.REACT_APP_SERVER_BASE &&
-    !process.env.REACT_APP_SERVER_PORT
-  ) {
-    apiUrl = "http://localhost:8080";
-  } else {
-    apiUrl = `${process.env.REACT_APP_SERVER_BASE}:${process.env.REACT_APP_SERVER_PORT}`; // grabbing variables from a configmap is good!
-  }
 
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    async function fetchTasks() {
-      const res = await fetch(`${apiUrl}/tasks`);
-      const data = await res.json();
-      setTasks(data.tasks);
-    }
-
-    fetchTasks();
+    getTasks().then((allTasks) => setTasks(allTasks));
   }, []);
 
   function onSubmit(e) {
@@ -38,24 +20,21 @@ function App() {
 
   function addNewTask() {
     const text = inputText.current.value;
-    fetch(`${apiUrl}/task`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text }),
-    }).then(async (response) => {
-      const data = await response.json();
 
-      const newData = [...tasks, data.task];
-      setTasks(newData);
-      inputText.current.value = "";
-    });
+    postNewTasks(text)
+      .then((response) => response.json())
+      .then((data) => {
+        const newData = [...tasks, data.task];
+        setTasks(newData);
+
+        inputText.current.value = "";
+      });
   }
+
   return (
     <div className="App">
       <header className="App-header">
-        <p>Task Management Slightly Modified</p>
+        <h1>Task Management Slightly Modified</h1>
       </header>
       <form onSubmit={onSubmit}>
         <input ref={inputText} type="text" placeholder="describe the task" />

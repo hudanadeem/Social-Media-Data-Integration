@@ -40,7 +40,7 @@ app.post("/task", async (req, res) => {
     await task.save().catch((e) => console.log(e));
     res.status(201).json({
       message: "Task has been added",
-      task: { _id: task._id, text: text },
+      task: { id: task._id, text: text },
     });
   } catch (err) {
     console.error(err.message);
