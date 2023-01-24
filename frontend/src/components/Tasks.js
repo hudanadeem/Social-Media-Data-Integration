@@ -1,11 +1,15 @@
-import Task from "./Task";
+import "../styles/components/Tasks.css";
 
 function Tasks({ tasks }) {
   return (
-    <div>
-      {tasks.map((task) => (
-        <Task key={task.id} text={task.text} />
-      ))}
+    <div className="tasks">
+      {tasks.map((task) => {
+        return (
+          <p key={task.id} className="task">
+            {"👉 "} {task.text}
+          </p>
+        );
+      })}
     </div>
   );
 }

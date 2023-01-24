@@ -1,0 +1,9 @@
+.tasks {
+  margin: 5rem 0;
+}
+
+.task {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 500;
+}

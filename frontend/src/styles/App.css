@@ -1,0 +1,91 @@
+.app {
+  width: 100%;
+  padding-left: 0.938rem;
+  padding-right: 0.938rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.app__header {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.app__form {
+  text-align: center;
+}
+
+.app__form-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  border-color: #6d6b80;
+  border-width: 2px;
+  border-radius: 0px;
+  padding-top: 0.45rem;
+  padding-right: 1rem;
+  padding-bottom: 0.45rem;
+  padding-left: 1rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  border-radius: 0.375rem;
+}
+
+.app__btn {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0.125rem solid #24292e;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: 0.375rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s ease-in;
+  vertical-align: middle;
+  white-space: nowrap;
+  background-color: rgb(36, 41, 46);
+  margin-left: 0.525rem;
+}
+
+.app__btn-text {
+  font-weight: 700;
+  margin-left: 0.333125rem;
+  vertical-align: middle;
+  color: rgb(255, 255, 255);
+}
+
+.app_btn-svg svg {
+  display: inline-block;
+  user-select: none;
+  vertical-align: middle;
+  overflow: visible;
+}
+
+@media (min-width: 576px) {
+  .app {
+    max-width: 33.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .app {
+    max-width: 45rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .app {
+    max-width: 60rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .app {
+    max-width: 71.25rem;
+  }
+}
