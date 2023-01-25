@@ -1,3 +1,4 @@
+# The backend/Dockerfile contains the documentation for the Dockerfile Instructions
 FROM node:18-slim
 
 ARG NODE_ENV=production
