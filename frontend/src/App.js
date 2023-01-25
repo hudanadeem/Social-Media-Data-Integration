@@ -34,7 +34,7 @@ function App() {
   return (
     <div className="app">
       <header className="app__header">
-        <h1>Task Management Slightly Mooodified</h1>
+        <h1>Task Management Slightly Modified</h1>
       </header>
       <form className="app__form" onSubmit={onSubmit}>
         <input
