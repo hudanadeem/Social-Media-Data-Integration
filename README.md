@@ -33,3 +33,21 @@ _this example was created by Anas shahwan and [originally posted on medium.com](
 1. The new VS Code window should open the frontend folder to make code changes. Any changes made inside the container should save it locally as well.
 1. Wait for VS Code to build and start the containers.
 1. I still have to figure out how to open the backend portion of the containers and develop it individually so stay tuned for that.
+
+## Troubleshooting common issues:
+
+When you pull the repository for the first time, the docker compose and build commands should definitely work. However, for subsequent builds if you face any issues, you can do the following:
+
+1. From Docker Desktop, go under the Containers tab and delete the three_container_stack
+2. Next go under Images tab, and delete the three_container_stack-frontend and three_container_stack-backend
+3. Next go under the Volumes tab and delete **all** the volumes, especially the three_container_stack_data.
+4. Go to VSCode where the project is and in the terminal run `docker compose build --no-cache`
+5. Next `docker compose up`
+
+If you face the issue:
+
+> react-scripts not found
+
+you may have modified the Dockerfile in the frontend folder. I know why this is happening - we have to set the path of the node_modules/.bin/ as our PATH inside the container. I haven't done that yet because I wanted to keep the Dockerfile simple for y'all but I will be adding this for a more stable build for Kubernetes.
+
+Another issue is hot-reloading inside the docker container for the react application is not working. This is bug in react-scripts-v5 which is still open. I am looking into solutions for this. I have test some containers to see if it is safe to downgrade to v4 instead. So stay tuned for that
