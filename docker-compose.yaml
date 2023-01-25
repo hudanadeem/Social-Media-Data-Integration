@@ -1,18 +1,29 @@
+# When running docker compose build or docker compose up - the default path for the compose file is ./docker-compose.[yaml|yml]
+# All reference documentation was inspired from here: https://docs.docker.com/compose/compose-file/compose-file-v3/
+# It is recommended to use docker-compose only for development environment and build the docker images from the Dockerfiles for production
+# Kubernetes will handle the orchestration for the containers without the help of docker compose
+
 # docker compose version which is currently 3.8
 version: "3.8"
 
-# services : is a list of our container
+# A compose file must declare the services element that lists the configurations of the different container
+# A service definition contains the configuration that is applied to each container started for that service
 services:
-  # name is optional for our mongodb
   mymongodb:
-    # since mongo is an offical image we can use it.
+    # Since mongo is an official image already built for us - we can pull it and use it from the docker hub registry.
+    # The 6 refers to the mongo version/tag we are using. It is recommended to mention the version number for stable builds
     image: mongo:6
 
-    # the port that we want to publish for mongodb
+    # exposes the ports in the format HOST:CONTAINER
+    # The CONTAINER port is the port exposed inside the container and the HOST port is publicly exposed port that our host machine can send request to
     ports:
       - "27017:27017"
 
-    # our mongodb depends on volume to keep the data alive.
+    # The data that our mongo saves must be persisted or saved. Containers are immutable and ephemeral meaning when you stop and restart a container
+    # it does not remember what it's previous state looked like. Same idea applies to database containers - the db container essentially wipes out all the data
+    # when they are stopped. This is something we don't want as data must be persisted even if the db container goes down
+    # Volumes helps us to persist the data and solve the problem above.
+    # Two excellent documentation about volumes can be found here: https://docs.docker.com/storage/volumes/ and here: https://docs.docker.com/storage/volumes/#use-a-volume-with-docker-compose
     volumes:
       - data:/data/db
 
@@ -22,54 +33,74 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=example
       - MONGO_INITDB_DATABASE=task-management
 
-  # name is optional for our backend
   backend:
-    # to build an image based on Dockerfile
-    # it looks in this folder to find Dockerfile to build an image
+    # build specifies the build configuration of the image. In our case we want to build the backend image from the Dockerfile inside the ./backend folder
+    # build can be specified either as a string containing a path to the build context
+    # or as an object with the path specified under context
     build:
       context: ./backend
+      # optionally specify the docker file if it is named differently
+      # dockerfile: <path to your dockerfile if the dockerfile is named something different than Dockerfile>
 
-    command: npm start
+      # You can also add build arguments, which are environment variables accessible only during the build process.
+      # You can access this build arguments/override the build args in the Dockerfile
+      # More info can be found here: https://docs.docker.com/compose/compose-file/compose-file-v3/#args
+      args:
+        - NODE_ENV=development
 
-    # the port that we want to publish for backend
+    # This will override the default run command in the CMD of your Dockerfile
+    # This is helpful because we can use docker-compose.yaml `command` for development and configure the CMD for production
+    command: ["npm", "start"]
+
+    # exposes the ports in the format HOST:CONTAINER
+    # The CONTAINER port is the port exposed inside the container and the HOST port is publicly exposed port that our host machine can send request to
     ports:
       - "8080:8080"
+
+    # Environment variables are "great" (technically not for secrets) for defining secrets, hostnames and ports
+    # NOTE: Variables defined under environment are not available during the image build process.
+    # To use build time environment variables the build.args is the place to define them
     environment:
       - MONGO_USERNAME=root
       - MONGO_PASSWORD=example
       - MONGO_HOSTNAME=host.docker.internal
       - MONGO_PORT=27017
       - MONGO_DATABASE_NAME=task-management
-    # depends_on means it will start our backend container once mongo-container is  up and running.
+
+    # depends_on expresses dependency between services.
+    # NOTE: depends_on does not wait for the service to be "healthy"
+    # If your mongo database crashes inside the mymongodb container for some reason, depends_on will still spin up the backend service
+    # Strategies for handling such issue can be found here: https://docs.docker.com/compose/startup-order/
     depends_on:
       - mymongodb
 
-  # name is optional for our frontend
+  # Explanantions are similar to the backend and mymongodb explanation above
   frontend:
-    # to build an image based on Dockerfile
-    # it looks in this folder to find Dockerfile to build an image
     build:
       context: ./frontend
 
-    command: npm start
+    command: ["npm", "start"]
 
-    # the port that we want to publish for frontend
     ports:
       - "3000:3000"
-    # add bind mount volume to keep have updated source code
+
+    # We are using something called bind mount here so that if you are developing inside the container and change any source code - it gets
+    # saved in the same destination on the host machine. This is different that the named volume we used for our mymongodb service
     volumes:
       - ./frontend:/frontend
+
     environment:
       - REACT_APP_SERVER_BASE=http://localhost
       - REACT_APP_SERVER_PORT=8080
-    # allow interactive mode
+
+    # This creates interactive mode which lets us execute commands in a shell when the container is running.
     stdin_open: true
     tty: true
 
-    # it will start our frontend container once backend-container is  up and running.
     depends_on:
       - backend
 
 # declare the volumes name that our app is using.
 volumes:
+  # The name below must match the volume name [the name on the left side of the colon] under mymongodb volumes
   data:
