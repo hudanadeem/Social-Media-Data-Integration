@@ -19,8 +19,8 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-color: #fff;
-  border-color: #6d6b80;
+  background-color: #ffffff;
+  border-color: #a1a0a3;
   border-width: 2px;
   border-radius: 0px;
   padding-top: 0.45rem;
@@ -30,40 +30,6 @@
   font-size: 1rem;
   line-height: 1.5rem;
   border-radius: 0.375rem;
-}
-
-.app__btn {
-  -webkit-appearance: none;
-  appearance: none;
-  border: 0.125rem solid #24292e;
-  border-radius: 0.375rem;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  line-height: 1.25rem;
-  padding: 0.375rem 1rem;
-  text-align: center;
-  text-decoration: none;
-  transition: all 0.2s ease-in;
-  vertical-align: middle;
-  white-space: nowrap;
-  background-color: rgb(36, 41, 46);
-  margin-left: 0.525rem;
-}
-
-.app__btn-text {
-  font-weight: 700;
-  margin-left: 0.333125rem;
-  vertical-align: middle;
-  color: rgb(255, 255, 255);
-}
-
-.app_btn-svg svg {
-  display: inline-block;
-  user-select: none;
-  vertical-align: middle;
-  overflow: visible;
 }
 
 @media (min-width: 576px) {
@@ -88,4 +54,13 @@
   .app {
     max-width: 71.25rem;
   }
+}
+.panel {
+  background-color: #d2a3a3;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 16px;
+  min-height: 90vh;
+  overflow-y: auto;
 }
