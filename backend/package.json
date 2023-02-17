@@ -8,8 +8,8 @@
     "start": "nodemon index.js",
     "lint": "eslint .  --ext .js",
     "lint-fix": "eslint --fix .  --ext .js",
-    "validate": "npm-run-all --parallel format lint",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|json)\""
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|json)\"",
+    "validate": "npm-run-all --parallel format lint"
   },
   "keywords": [],
   "author": "",

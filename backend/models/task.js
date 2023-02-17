@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
@@ -7,6 +7,6 @@ const taskSchema = new Schema({
   text: String,
 });
 
-const TaskModel = mongoose.model("Goal", taskSchema);
+const TaskModel = mongoose.model('Goal', taskSchema);
 
 module.exports = TaskModel;
