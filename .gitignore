@@ -40,3 +40,6 @@ Thumbs.db
 ###################
 __pycache__/
 studentlist.txt
+
+#Node_modules
+node_modules
