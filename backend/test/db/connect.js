@@ -6,11 +6,13 @@ const {MongoMemoryServer} = require('mongodb-memory-server');
  * for testing purposes ONLY
  **/
 async function connect() {
-  // The NODE_ENV variable is set to 'test' in the package.json file under the test script
-  // cross-env is used in the package.json to set the NODE_ENV variable both on Windows and Unix systems
+  // The NODE_ENV variable is set to 'test' 
+  //in the package.json file under the test script
+  // cross-env is used in the package.json to set 
+  //the NODE_ENV variable both on Windows and Unix systems
   if (process.env.NODE_ENV !== 'test') {
     throw new Error(
-      'NODE_ENV is not set to test. You should use MongoDB in-memory server for testing.'
+      'NODE_ENV is not set to test.'
     );
   }
 
@@ -30,7 +32,8 @@ async function connect() {
 /**
  * Closes the connection to the in-memory MongoDB server 
  * to avoid memory leaks and side effects
- * @return {Promise} the mongoose promise that resolves to the closing connection
+ * @return {Promise} the mongoose promise that 
+ * resolves to the closing connection
  **/
 function close() {
   return mongoose.disconnect();
