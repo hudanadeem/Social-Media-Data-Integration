@@ -1,0 +1,31 @@
+# Official framework image. Look for the different tagged releases at:
+# https://hub.docker.com/r/library/node/tags/
+image: node:latest
+
+stages:
+  - lint
+  - test
+
+# Pick zero or more services to be used on all builds.
+# Only needed when using a docker container to run your tests in.
+# Check out: https://docs.gitlab.com/ee/ci/services/index.html
+services:
+  - mongo:latest
+
+lint_server:
+  stage: lint
+  script:
+    - cd ./backend
+    - npm install
+    - npm run validate # runs the validate script in package.json to format and lint the code
+  allow_failure: false
+
+test_server:
+  stage: test
+  script:
+    - cd ./backend
+    - npm install
+    - npm run test # runs the test script in package.json to run the tests
+  dependencies:
+    - lint_server
+  allow_failure: false
