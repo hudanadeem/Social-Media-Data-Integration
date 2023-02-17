@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "test": "NODE_ENV=test && mocha --recursive --exit",
+    "start": "nodemon index.js",
+    "lint-fix": "eslint --fix .  --ext .js",
+    "lint": "eslint --fix .  --ext .js",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|json)\"",
+    "validate": "npm-run-all --parallel format lint"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +18,23 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "mongodb-memory-server": "^8.11.4",
     "mongoose": "^6.8.4",
     "nodemon": "^2.0.13"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.34.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "8.6.0",
+    "eslint-plugin-node": "11.1.0",
+    "mocha": "^10.2.0",
+    "npm-run-all": "4.1.5",
+    "prettier": "2.8.4",
+    "supertest": "^6.3.3"
+  },
+  "optionalDependencies": {
+    "win-node-env": "^0.6.1"
   }
 }
