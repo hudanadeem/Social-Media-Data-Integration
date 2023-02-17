@@ -6,8 +6,8 @@
   "scripts": {
     "test": "NODE_ENV=test && mocha --recursive --exit",
     "start": "nodemon index.js",
-    "lint": "eslint .  --ext .js",
     "lint-fix": "eslint --fix .  --ext .js",
+    "lint": "eslint --fix .  --ext .js",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|json)\"",
     "validate": "npm-run-all --parallel format lint"
   },
