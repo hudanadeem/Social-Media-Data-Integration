@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -22,7 +21,7 @@ spec:
           # image: sniffer-mongo
           # imagePullPolicy: Never # Comment out the imagePullPolicy field if you are NOT running locally. Otherwise, set it to Never.
 
-          image: registry.socs.uoguelph.ca/3760w23/demogroup/three_container_stack/mongo:staging
+          image: registry.socs.uoguelph.ca/3760w23/w1/sniffer/mass_d/mongo:staging
           imagePullPolicy: Always
 
           env:

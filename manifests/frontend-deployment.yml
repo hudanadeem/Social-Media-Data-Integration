@@ -1,4 +1,3 @@
-
 # staging Deployment Kubernetes Object for our Frontend
 
 # A Deployment is a Kubernetes Object that manages a ReplicaSet.
@@ -64,7 +63,7 @@ spec:
           # image: sniffer-fe:latest # TODO: replace this with your local image name to run locally or comment it out to run from the registry
           # imagePullPolicy: Never # Comment out the imagePullPolicy field if you are NOT running locally. Otherwise, set it to Never.
 
-          image: registry.socs.uoguelph.ca/3760w23/demogroup/three_container_stack/frontend:staging # TODO: replace this with your image name from the Container Registry
+          image: registry.socs.uoguelph.ca/3760w23/w1/sniffer/mass_d/frontend:staging
           imagePullPolicy: Always
 
           env:
