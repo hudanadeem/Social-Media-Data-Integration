@@ -1,4 +1,3 @@
-
 # The Deployment spec is very much similar to the one we created in the frontend deployment
 # except that we are using a different image.
 
@@ -65,3 +64,5 @@ spec:
 
       imagePullSecrets:
         - name: regcred # TODO: replace this with your image pull secret name
+
+# Trigger backend deployment
