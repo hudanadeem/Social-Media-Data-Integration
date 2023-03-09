@@ -1,10 +1,12 @@
 # Official framework image. Look for the different tagged releases at:
 # https://hub.docker.com/r/library/node/tags/
-image: node:latest
+image: node:16
 
 stages:
   - lint
   - test
+  - staging
+  - production
 
 # Pick zero or more services to be used on all builds.
 # Only needed when using a docker container to run your tests in.
@@ -29,3 +31,116 @@ test_server:
   dependencies:
     - lint_server
   allow_failure: false
+
+build-staging-frontend:
+  stage: staging
+  image:
+    name: gcr.io/kaniko-project/executor:v1.9.0-debug # GitLab recommends using the debug version of kaniko
+    entrypoint: [""] # The entrypoint needs to be overridden, for the build script to run
+
+  # The script that will be run to build the docker image. We don't have to change much here if you all followed the lab setup
+  # The dollar sign values are predefined environment variables that are set by GitLab
+  script:
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}/frontend"
+      --dockerfile "${CI_PROJECT_DIR}/frontend/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}/frontend:staging"
+  allow_failure: false
+  dependencies: []
+
+  # The rules for when this job will run.
+  # We only want this job to run when we push to the staging branch otherwise we never run this
+  # Once the job is completed, the docker images will be pushed to the gitlab registry which can be found
+  # under Packages & Registries -> Container Registry: https://gitlab.socs.uoguelph.ca/3760W23/demogroup/three_container_stack/container_registry/
+  rules:
+    - if: $CI_COMMIT_BRANCH == "staging" && $CI_PIPELINE_SOURCE == "push"
+      when: always
+    - when: never
+
+# Similar to the frontend job, we will be building the backend docker image
+build-staging-backend:
+  stage: staging
+  image:
+    name: gcr.io/kaniko-project/executor:v1.9.0-debug
+    entrypoint: [""]
+  script:
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}/backend"
+      --dockerfile "${CI_PROJECT_DIR}/backend/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}/backend:staging"
+  allow_failure: false
+  dependencies: []
+  rules:
+    - if: $CI_COMMIT_BRANCH == "staging" && $CI_PIPELINE_SOURCE == "push"
+      when: always
+    - when: never
+
+build-staging-mongo:
+  stage: staging
+  image:
+    name: gcr.io/kaniko-project/executor:v1.9.0-debug
+    entrypoint: [""]
+  script:
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}/mongodb"
+      --dockerfile "${CI_PROJECT_DIR}/mongodb/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}/mongo:staging"
+  allow_failure: false
+  dependencies: []
+  rules:
+    - if: $CI_COMMIT_BRANCH == "staging" && $CI_PIPELINE_SOURCE == "push"
+      when: always
+    - when: never
+
+# We will create a similar setup for a production branch
+build-production-frontend:
+  stage: production
+  image:
+    name: gcr.io/kaniko-project/executor:v1.9.0-debug
+    entrypoint: [""]
+  script:
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}/frontend"
+      --dockerfile "${CI_PROJECT_DIR}/frontend/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}/frontend:production"
+  allow_failure: false
+  dependencies: []
+  rules:
+    - if: $CI_COMMIT_BRANCH == "production" && $CI_PIPELINE_SOURCE == "push"
+      when: always
+    - when: never
+
+build-production-backend:
+  stage: production
+  image:
+    name: gcr.io/kaniko-project/executor:v1.9.0-debug
+    entrypoint: [""]
+  script:
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}/backend"
+      --dockerfile "${CI_PROJECT_DIR}/backend/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}/backend:production"
+  allow_failure: false
+  dependencies: []
+  # https://docs.gitlab.com/ee/ci/jobs/job_control.html#avoid-duplicate-pipelines
+  rules:
+    - if: $CI_COMMIT_BRANCH == "production" && $CI_PIPELINE_SOURCE == "push"
+      when: always
+    - when: never
+
+build-production-mongo:
+  stage: production
+  image:
+    name: gcr.io/kaniko-project/executor:v1.9.0-debug
+    entrypoint: [""]
+  script:
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}/mongodb"
+      --dockerfile "${CI_PROJECT_DIR}/mongodb/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}/mongo:production"
+  allow_failure: false
+  dependencies: []
+  rules:
+    - if: $CI_COMMIT_BRANCH == "production" && $CI_PIPELINE_SOURCE == "push"
+      when: always
+    - when: never
