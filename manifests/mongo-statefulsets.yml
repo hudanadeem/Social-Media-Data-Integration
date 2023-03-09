@@ -1,0 +1,58 @@
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sniffer-staging-mongo-statefulset
+  namespace: sniffer-staging
+spec:
+  replicas: 1
+  serviceName: sniffer-staging-mongo-service
+  selector:
+    matchLabels:
+      app: sniffer-mongo
+  template:
+    metadata:
+      labels:
+        app: sniffer-mongo
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: sniffer-mongo
+
+          # image: sniffer-mongo
+          # imagePullPolicy: Never # Comment out the imagePullPolicy field if you are NOT running locally. Otherwise, set it to Never.
+
+          image: registry.socs.uoguelph.ca/3760w23/demogroup/three_container_stack/mongo:staging
+          imagePullPolicy: Always
+
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: sniffer-mongo-secrets
+                  key: mongo-initdb-root-username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sniffer-mongo-secrets
+                  key: mongo-initdb-root-password
+            - name: MONGO_INITDB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: sniffer-staging-configmap
+                  key: mongo-initdb-database
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data/db
+      imagePullSecrets:
+        - name: regcred # TODO: replace this with your image pull secret name
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-persistent-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi

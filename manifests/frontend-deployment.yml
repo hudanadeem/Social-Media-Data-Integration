@@ -1,0 +1,85 @@
+
+# staging Deployment Kubernetes Object for our Frontend
+
+# A Deployment is a Kubernetes Object that manages a ReplicaSet.
+# A ReplicaSet manages a set of Pods.
+# A Pod is a group of one or more containers that are deployed together.
+# Usually a pod contains a single container.
+# In simple terms, a Pod acts as an abstraction over a container ->
+# a ReplicaSet acts as an abstraction over a Pod -> a Deployment acts as an abstraction over a ReplicaSet.
+
+# All Kubernetes configs needs to have the apiVersion, kind and metadata fields.
+# References:
+# - https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#writing-a-deployment-spec
+# - https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/deployment-v1/
+apiVersion: apps/v1 # The apiVersion matters because it determines the different fields that can be used in the Deployment config.
+kind: Deployment
+metadata:
+  # The name field is a unique identifier for the Deployment.
+  # TODO: Change the name to your application name with a frontend suffix
+  name: sniffer-staging-frontend
+  # namespaces provides a mechanism for isolating groups of resources within a single cluster
+  # This will be helpful when we access the UI or the Rancher Dashboard.
+  # TODO: Change the namespace to your application name with a staging suffix
+  namespace: sniffer-staging
+
+# A Deployment config needs to have the spec field.
+# The spec field describes the "desired state" of the Deployment Object.
+# More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/
+spec:
+  # replicas (optional) is the number of desired Pods that the Deployment should manage.
+  # We only want one instance of our staging frontend for now.
+  replicas: 1
+
+  # selector (required) is a label selector for pods.
+  # This Deployment Object manages the pods that matches label {app, sniffer-frontend}
+  # where app is the key and sniffer-frontend is the value.
+  # It must match .spec.template.metadata.labels of the Pod template.
+  # More info: https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/label-selector/#LabelSelector
+  selector:
+    matchLabels:
+      # TODO: Change the app label to your application name with a frontend suffix
+      # It must match the app label in the template field.
+      app: sniffer-frontend
+
+  # template (required) is the desired state of the Pod.
+  # The template defines how the Pods should look like.
+  template:
+    metadata:
+      labels:
+        # TODO: Change the app label to your application name with a frontend suffix
+        # It must match the app label in the selector field above.
+        app: sniffer-frontend
+
+    # The spec is where the container configuration is set.
+    # More info: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#PodSpec
+    spec:
+      # containers (required) is a list of containers that should be run within the Pod.
+      # More Info: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Container
+      containers:
+        - name: sniffer # TODO: replace this with your application name
+          resources: {}
+          ports:
+            - containerPort: 3000
+          # image: sniffer-fe:latest # TODO: replace this with your local image name to run locally or comment it out to run from the registry
+          # imagePullPolicy: Never # Comment out the imagePullPolicy field if you are NOT running locally. Otherwise, set it to Never.
+
+          image: registry.socs.uoguelph.ca/3760w23/demogroup/three_container_stack/frontend:staging # TODO: replace this with your image name from the Container Registry
+          imagePullPolicy: Always
+
+          env:
+            - name: REACT_APP_SERVER_BASE
+              valueFrom:
+                configMapKeyRef:
+                  name: sniffer-staging-configmap
+                  key: react-app-server-base
+
+            - name: REACT_APP_SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: sniffer-staging-configmap
+                  key: react-app-server-port
+
+      # Comment out the imagePullSecrets field if you are running locally.
+      imagePullSecrets:
+        - name: regcred # TODO: replace this with your image pull secret name
