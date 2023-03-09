@@ -55,4 +55,3 @@ spec:
         resources:
           requests:
             storage: 1Gi
-# Trigger Deployment
