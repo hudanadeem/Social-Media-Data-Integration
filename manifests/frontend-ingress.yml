@@ -1,0 +1,20 @@
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sniffer-staging-frontend-ingress
+  namespace: sniffer-staging
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: sniffer-staging.socs.uoguelph.ca # TODO: replace this with your application name with a frontend suffix
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sniffer-staging-frontend-service
+                port:
+                  number: 80
+

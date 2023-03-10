@@ -23,6 +23,6 @@ namespace: sniffer
 dockeremail: hnadee03@uoguelph.ca
 
 rancher context switch
-rancher kubectl create namespace sniffer
+rancher kubectl create namespace sniffer-staging
 
-rancher kubectl create secret docker-registry regcred --namespace=sniffer --docker-server=registry.socs.uoguelph.ca --docker-username=snifferagent --docker-password=tXnxhC3Y7JA-e6xPnbpH --docker-email=hnadee03@uoguelph.ca
+rancher kubectl create secret docker-registry regcred --namespace=sniffer-staging --docker-server=registry.socs.uoguelph.ca --docker-username=snifferagent --docker-password=tXnxhC3Y7JA-e6xPnbpH --docker-email=hnadee03@uoguelph.ca
