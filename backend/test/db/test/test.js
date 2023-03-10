@@ -60,7 +60,7 @@ describe('Testing database', () => {
 
     it('Inserts a post into the database using getRedditPosts and parseRedditData', async () => {
    
-        const response = await api.parseRedditData();
+        await api.parseRedditData();
         const data = await redditModel.find();
         expect(data).to.not.equal([]);
     })
