@@ -3,22 +3,22 @@ const axios = require("axios");
 const RedditModel = require("../models/reddit.model");
 const mongoose = require("mongoose");
 
-// const searchTerms = [
-//   "Nuke",
-//   "Nuclear%20Weapon",
-//   "ICBM",
-//   "Bio-weapon",
-//   "Biological%20Warfare",
-//   "Anthrax",
-//   "Smallpox",
-//   "Plague",
-//   "Germ%20Warfare",
-//   "Chemical%20Weapon",
-//   "Nerve%20Weapon",
-//   "Asphyxiant%20Weapon",
-//   "Nuclear%20Bomb",
-// ];
-const searchTerms = ["Smallpox"]; // TODO: Remove this and uncomment above
+ const searchTerms = [
+   "Nuke",
+   "Nuclear%20Weapon",
+   "ICBM",
+   "Bio-weapon",
+   "Biological%20Warfare",
+   "Anthrax",
+   "Smallpox",
+   "Plague",
+   "Germ%20Warfare",
+   "Chemical%20Weapon",
+   "Nerve%20Weapon",
+   "Asphyxiant%20Weapon",
+   "Nuclear%20Bomb",
+ ];
+//const searchTerms = ["Example"]; // TODO: Remove this and uncomment above
 
 /**
  * Gets Post from Api
@@ -44,10 +44,11 @@ async function parseRedditData() {
     const datas = receivedResponse
       .map((response) => response.data)
       .map(
-        ({ups, upvote_ratio, thumbnail, subreddit, created}) =>
+        ({title, ups, upvote_ratio, thumbnail, subreddit, created}) =>
           new RedditModel({
             _id: new mongoose.Types.ObjectId(),
             word: search,
+            title,
             ups,
             upvote_ratio,
             thumbnail,
