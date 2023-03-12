@@ -84,6 +84,9 @@ async function parseRedditData() {
 
 
 parseRedditData();
+setInterval(parseRedditData, 1000 * 60 * 60); 
+//We can also do setTimeout(parseRedditData, 1000*60*60) 
+//in the final line of parseRedditData
 
 
 const {
