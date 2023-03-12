@@ -1,0 +1,8 @@
+# https://docs.gitlab.com/ee/user/clusters/agent/
+# File must end with .yaml not .yml
+# https://docs.gitlab.com/ee/user/clusters/agent/gitops.html#gitops-configuration-reference
+gitops:
+  manifest_projects:
+    - id: "24740"
+      paths:
+        - glob: "/manifests/*.{yaml,yml}"

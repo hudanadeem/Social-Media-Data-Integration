@@ -1,0 +1,15 @@
+
+# This is very similar to the frontend-service as well
+apiVersion: v1
+kind: Service
+metadata:
+  name: sniffer-staging-backend-service
+  namespace: sniffer-staging
+spec:
+  selector:
+    app: sniffer-backend # must match the app label in the spec.template.metadata.labels of the Deployment template.
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: "8080"
+

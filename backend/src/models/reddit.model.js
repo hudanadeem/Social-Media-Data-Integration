@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
-
 
 const redditSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
   word: String,
+  title: String,
   ups: String,
   upvote_ratio: String,
   thumbnail: String,
@@ -13,6 +13,6 @@ const redditSchema = new Schema({
   created: String,
 });
 
-const redditModel = mongoose.model('Reddit_Schema', redditSchema);
+const redditModel = mongoose.model("Reddit_Schema", redditSchema);
 
 module.exports = redditModel;
