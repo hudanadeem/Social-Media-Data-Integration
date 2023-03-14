@@ -1,0 +1,34 @@
+.post {
+    display: flex;
+    margin-bottom: 1rem;
+  }
+  
+  .post-image {
+    flex: 0 0 auto;
+    width: 100px;
+    height: 100px;
+    margin-right: 1rem;
+    overflow: hidden;
+  }
+  
+  .post-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .post-content {
+    flex: 1 1 auto;
+  }
+  
+  .post h2 {
+    font-size: 1.5rem;
+    margin-top: 0;
+  }
+  
+  .post-meta {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  

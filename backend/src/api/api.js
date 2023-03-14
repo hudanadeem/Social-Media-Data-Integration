@@ -3,22 +3,22 @@ const axios = require("axios");
 const RedditModel = require("../models/reddit.model");
 const mongoose = require("mongoose");
 
-// const searchTerms = [
-//   "Nuke",
-//   "Nuclear%20Weapon",
-//   "ICBM",
-//   "Bio-weapon",
-//   "Biological%20Warfare",
-//   "Anthrax",
-//   "Smallpox",
-//   "Plague",
-//   "Germ%20Warfare",
-//   "Chemical%20Weapon",
-//   "Nerve%20Weapon",
-//   "Asphyxiant%20Weapon",
-//   "Nuclear%20Bomb",
-// ];
-const searchTerms = ["Smallpox"]; // TODO: Remove this and uncomment above
+const searchTerms = [
+  "Nuke",
+  "Nuclear%20Weapon",
+  "ICBM",
+  "Bio-weapon",
+  "Biological%20Warfare",
+  "Anthrax",
+  "Smallpox",
+  "Plague",
+  "Germ%20Warfare",
+  "Chemical%20Weapon",
+  "Nerve%20Weapon",
+  "Asphyxiant%20Weapon",
+  "Nuclear%20Bomb",
+];
+// const searchTerms = ["Smallpox"]; // TODO: Remove this and uncomment above
 
 /**
  * Gets Post from Api
