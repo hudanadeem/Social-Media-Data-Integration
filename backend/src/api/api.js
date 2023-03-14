@@ -37,11 +37,12 @@ async function getRedditPosts(search) {
  * Formats api response to add to mongodb
  */
 async function parseRedditData() {
+  var datas = []
   for (const search of searchTerms) {
     const receivedResponse = await getRedditPosts(search);
-    // console.log(receivedResponse);
+    //console.log(receivedResponse);
 
-    const datas = receivedResponse
+    const data = receivedResponse
       .map((response) => response.data)
       .map(
         ({title, ups, upvote_ratio, thumbnail, subreddit, created}) =>
@@ -57,8 +58,9 @@ async function parseRedditData() {
           })
       );
 
-    return RedditModel.insertMany(datas);
+    datas.push(...data)
   }
+  return RedditModel.insertMany(datas);
 }
 
 module.exports = {parseRedditData, getRedditPosts};
