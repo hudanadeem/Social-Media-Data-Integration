@@ -1,0 +1,17 @@
+.folder {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .folder__name {
+    margin: 0 0 8px;
+  }
+  
+  .folder__contents {
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  
