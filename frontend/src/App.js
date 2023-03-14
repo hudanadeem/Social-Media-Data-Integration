@@ -7,9 +7,9 @@ import React from 'react';
 
 
 // import ReactDOM from 'react-dom'
-import Navbar from "./components/Navbar";
+import Navbar from "./Components/Navbar";
 import {BrowserRouter as Router, Routes ,Route} from 'react-router-dom'
-import Home from './components/pages/Home'
+import Home from './Components/pages/Home'
 
 function App() {
 
