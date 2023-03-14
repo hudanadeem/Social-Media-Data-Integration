@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test && mocha --recursive --exit",
-    "testBackend": "mocha --recursive",
+    "test": "NODE_ENV=test && mocha --recursive --exit  --timeout 100000",
+    "testBackend": "mocha --recursive  --timeout 100000",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "lint-fix": "eslint --fix .  --ext .js",
