@@ -1,9 +1,35 @@
-.app {
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.home
+.services,
+.products,
+.sign-up {
+  display: flex;
+  height: 90vh;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: black;
+}
+
+
+
+/* .app {
   width: 100%;
-  padding-left: 0.938rem;
-  padding-right: 0.938rem;
-  margin-right: auto;
-  margin-left: auto;
+  height: 100vh; /* set the height to 100% viewport height 
+  padding: 0; /* remove the left and right padding 
+  margin: 0; /* remove the left and right margin 
+  background-color: Ivory;
+  display: inline-block;
+}
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
 }
 
 .app__header {
@@ -19,8 +45,6 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-color: #ffffff;
-  border-color: #a1a0a3;
   border-width: 2px;
   border-radius: 0px;
   padding-top: 0.45rem;
@@ -30,37 +54,5 @@
   font-size: 1rem;
   line-height: 1.5rem;
   border-radius: 0.375rem;
-}
+}*/
 
-@media (min-width: 576px) {
-  .app {
-    max-width: 33.75rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .app {
-    max-width: 45rem;
-  }
-}
-
-@media (min-width: 992px) {
-  .app {
-    max-width: 60rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .app {
-    max-width: 71.25rem;
-  }
-}
-.panel {
-  background-color: #d2a3a3;
-  border: 1px solid #000000;
-  border-radius: 4px;
-  padding: 16px;
-  margin-bottom: 16px;
-  min-height: 90vh;
-  overflow-y: auto;
-}
