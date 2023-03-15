@@ -48,7 +48,7 @@ async function parseRedditData() {
         ({title, ups, upvote_ratio, thumbnail, subreddit, created}) =>
           new RedditModel({
             _id: new mongoose.Types.ObjectId(),
-            word: search,
+            word: search.replace("%20", " "),
             title,
             ups,
             upvote_ratio,
