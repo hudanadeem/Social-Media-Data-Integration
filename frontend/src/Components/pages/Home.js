@@ -6,16 +6,28 @@ import Post from '../../Post';
 import { getPosts } from "../.././api/api";
 import Folder from '../../Folder';
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 
 
 
 function Home (){
 
     const [content, setContent] = useState([]);
+    const [postsIn4Hours, setPostsIn4Hours] = useState(0);
 
     useEffect(() => {
         getPosts().then((posts) => {
         setContent(posts);
+
+        let now = moment().subtract(4, 'hours').unix();
+        console.log(now);
+        let fourHourCount = posts.filter((post) => {
+          if (post.created >= now){
+            return true;
+          }
+          return false;
+        })
+        setPostsIn4Hours(fourHourCount.length);
         });
     }, []);
 
