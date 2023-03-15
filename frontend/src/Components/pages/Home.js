@@ -1,13 +1,10 @@
-// import React from 'react';
 import '../../App.css'
 import './Home.css'
-// import MainSection from '../MainSection'
 import Post from '../../Post';
 import { getPosts } from "../.././api/api";
 import Folder from '../../Folder';
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
-
 
 
 function Home (){
@@ -57,7 +54,6 @@ function Home (){
           ))}
         </Folder>
         ))}
-            {/* <MainSection/> */}
         </>
     );
 }
