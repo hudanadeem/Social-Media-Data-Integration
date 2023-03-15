@@ -1,9 +1,10 @@
 import React, {useState, useEffect}from 'react'
 import {Link} from 'react-router-dom'
 import { Button } from './Button';
-import './Navbar.css';
+import DarkMode from './DarkMode';
 // import '../index.css'
-// import './DarkMode'
+import './Navbar.css';
+
 
 function Navbar(){
 
@@ -34,7 +35,7 @@ function Navbar(){
                     <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
                         Mass Destruction
                     </Link>
-                    <div classname ='menu-icon' onClick={handleClick}>
+                    <div className='menu-icon' onClick={handleClick}>
                         <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
                     </div>
                     <ul className={click ? 'nav-menu active': 'nav-menu'}>
@@ -43,12 +44,7 @@ function Navbar(){
                                 Home
                             </Link>
                         </li>
-                        <li className = 'nav-item'>
-                            <Link to='/darkmode' className='nav-links' onClick = {closeMobileMenu}>
-                                DarkMode
-                            </Link>
-                        </li>
-
+                            <DarkMode/>
                         <li>
                             <Link to='/sign-ip' className='nav-links-mobile' onClick={closeMobileMenu}>
                                 Sign In
