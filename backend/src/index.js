@@ -16,9 +16,13 @@ connect().then(
     app.listen(PORT, () => {
       console.log(`Listening on port: ${PORT}`);
 
-      // TODO: This will run every time the server starts/restarts.
-      // TODO: Not sure if this is expected behavior.
+
       parseRedditData();
+
+      //Run API grab hourly
+      setInterval(parseRedditData, 1000 * 60 * 60); 
+      //We can also do setTimeout(parseRedditData, 1000*60*60) 
+      //in the final line of parseRedditData
     });
   },
   (err) => {
