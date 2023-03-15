@@ -7,10 +7,11 @@ const Post = ({ post }) => {
   return (
     <div className="post">
       <div className="post-image">
-        <img src={post.thumbnail} alt={post.word.replace("%20", " ")} />
+        <h3>Keyword: {post.word}</h3>
       </div>
       <div className="post-content">
-        <h3>{post.title}</h3>
+        <h3>{"Reddit post"}</h3>
+        <p className="post-meta">Title: {post.title}</p>
         <p className="post-meta">Ups: {ups}</p>
         <p className="post-meta">Upvote Ratio: {post.upvote_ratio}</p>
         <p className="post-meta">Subreddit: {post.subreddit}</p>
