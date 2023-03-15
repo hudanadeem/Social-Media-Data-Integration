@@ -4,13 +4,16 @@ import "./Home.css";
 // import MainSection from '../MainSection'
 import Post from "../../Post";
 import { getPosts } from "../.././api/api";
-import Folder from "../../Folder";
-import React, { useState, useEffect } from "react";
+import Folder from '../../Folder';
+import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import Select from "react-select";
 
 function Home() {
   const [content, setContent] = useState([]);
   const [filterWord, setFilterWord] = useState("None");
+  const [postsIn4Hours, setPostsIn4Hours] = useState(0);
+
 
   const options = [
     { value: "None", label: "None" },
@@ -31,13 +34,19 @@ function Home() {
 
   useEffect(() => {
     getPosts().then((posts) => {
-      setContent(posts);
+    setContent(posts);
+
+    let now = moment().subtract(4, 'hours').unix();
+    console.log(now);
+    let fourHourCount = posts.filter((post) => {
+      if (post.created >= now){
+        return true;
+      }
+      return false;
+    })
+    setPostsIn4Hours(fourHourCount.length);
     });
-  }, []);
-
-  useEffect(() => {
-
-  }, [content]);
+}, []);
 
   const sortedContent = content.sort((a, b) => {
     if (a.word < b.word) {
@@ -79,8 +88,12 @@ function Home() {
     });
   }
 
+
   return (
     <>
+      <h1>Posts in last 4 hours including weapons of mass destruction: {postsIn4Hours}</h1>
+      <br />
+      <br />
       <h1>Filter for word: </h1>
       <Select placeholder={filterWord} isSearchable={false} options={options} value={filterWord} onChange={value => onFilterChange(value)}/>
       <h1>Current word: {filterWord}</h1>
