@@ -91,16 +91,9 @@ function Home() {
             <Post key={post._id} post={post} />
           ))}
         </Folder>
-      ))}
-      {/* <MainSection/> */}
-    </>
-  );
-
-  function Test() {
-    if (filterWord == "None") {
-      return <></>;
-    }
-  }
+        ))}
+        </>
+    );
 }
 
 export default Home;
