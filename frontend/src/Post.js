@@ -1,7 +1,12 @@
 import React from 'react';
 
 const Post = ({ post }) => {
-  const date = new Date(post.created * 1000).toLocaleDateString();
+  const date = new Date(post.created * 1000);
+  const date_string = new Date(post.created * 1000).toLocaleDateString()
+  const hours = date.getHours();
+  const minutes = "0" + date.getMinutes();
+  const seconds = "0" + date.getSeconds();
+  const date_display = date_string + " " + hours + "/" + minutes.substr(-2) + "/" + seconds.substr(-2);
   const ups = parseInt(post.ups).toLocaleString();
 
   return (
@@ -14,7 +19,7 @@ const Post = ({ post }) => {
         <p className="post-meta">Ups: {ups}</p>
         <p className="post-meta">Upvote Ratio: {post.upvote_ratio}</p>
         <p className="post-meta">Subreddit: {post.subreddit}</p>
-        <p className="post-meta">Created: {date}</p>
+        <p className="post-meta">Created: {date_display}</p>
       </div>
     </div>
   );
