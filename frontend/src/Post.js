@@ -1,5 +1,4 @@
 import React from 'react';
-import Moment from 'moment';
 import moment from 'moment';
 
 const Post = ({ post }) => {
