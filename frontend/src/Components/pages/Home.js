@@ -47,6 +47,8 @@ function Home (){
 
     return(
         <>
+        <h2>Posts in last 4 hours including weapons of mass destruction: {postsIn4Hours}</h2>
+        <br />
         {Object.entries(groupedContent).map(([word, posts]) => (
         <Folder key={word} name={word}>
           {posts.map((post) => (
