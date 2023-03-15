@@ -12,6 +12,8 @@ import Select from "react-select";
 function Home() {
   const [content, setContent] = useState([]);
   const [filterWord, setFilterWord] = useState("None");
+  const [postsIn4Hours, setPostsIn4Hours] = useState(0);
+
 
   const options = [
     { value: "None", label: "None" },
