@@ -1,3 +1,16 @@
+:root{
+  --body_background:white;
+  --body_color: black;
+  --link_color: navy;
+}
+[data-theme = "dark"]{
+  --body_background: #282c34;
+  --body_color: white;
+  --link_color: cyan;
+}
+*{
+  transition: all 0.3s ease-in-out;
+}
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@500;700&display=swap");
 
 body {
