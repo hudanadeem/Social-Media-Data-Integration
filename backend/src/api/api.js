@@ -3,7 +3,6 @@ const axios = require("axios");
 const RedditModel = require("../models/reddit.model");
 const NewsApiModel = require("../models/newsapi.model");
 const mongoose = require("mongoose");
-const { response } = require("express");
 const newsApiKey = "6ab9a99f47a843f48128b78c55dacc92"
 
  const searchTerms = [
@@ -44,7 +43,7 @@ async function parseNewsApiData(){
     const receivedResponse = await getNewsApiResults(search);
 
     for (let article in receivedResponse.articles){
-
+      if (article != -1){                             //only for linter
       const obj = new NewsApiModel({
         _id: new mongoose.Types.ObjectId(),
         word: search.replace("%20", " "),
@@ -53,6 +52,7 @@ async function parseNewsApiData(){
         url: receivedResponse.articles[article].url,
         created: receivedResponse.articles[article].publishedAt,
       })
+    
 
       const data = 
       {
@@ -68,6 +68,7 @@ async function parseNewsApiData(){
       datas.push({...data})
 
     }
+  }
 
   }
 
