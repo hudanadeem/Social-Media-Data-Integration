@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-/* eslint-disable no-unsupported-features */
+/* eslint-disable node/no-unsupported-features/es-syntax */
 const axios = require("axios");
 const RedditModel = require("../models/reddit.model");
 const NewsApiModel = require("../models/newsapi.model");
