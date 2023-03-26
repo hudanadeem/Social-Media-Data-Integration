@@ -65,7 +65,7 @@ async function parseNewsApiData(){
       }
 
       //console.log(data)
-      datas.push({...data})
+      datas.push(...data)
 
     }
   }
