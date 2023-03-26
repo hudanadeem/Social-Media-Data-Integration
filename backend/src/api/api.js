@@ -64,7 +64,7 @@ async function parseNewsApiData(){
         "created" : obj.created,
       }
 
-      console.log(data)
+      //console.log(data)
       datas.push({...data})
 
     }
@@ -74,7 +74,6 @@ async function parseNewsApiData(){
   return NewsApiModel.insertMany(datas);
 }
 
-parseNewsApiData();                              //TODO: Remove this and place in index.js with a timer
 
 /**
  * Gets Post from Api
@@ -121,4 +120,4 @@ async function parseRedditData() {
 return RedditModel.insertMany(datas);
 }
 
-module.exports = {parseRedditData, getRedditPosts};
+module.exports = {parseRedditData, getRedditPosts, parseNewsApiData, getNewsApiResults};
