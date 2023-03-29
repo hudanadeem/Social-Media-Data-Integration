@@ -47,6 +47,7 @@ async function parseNewsApiData(){
       if (article != -1){                             //only for linter
       const obj = new NewsApiModel({
         _id: new mongoose.Types.ObjectId(),
+        api: "News",
         word: search.replace("%20", " "),
         source: receivedResponse.articles[article].source.name,
         title: receivedResponse.articles[article].title,
@@ -58,6 +59,7 @@ async function parseNewsApiData(){
       const data = 
       {
         "_id" : obj.id,
+        "api" : obj.api,
         "word" : search.replace("%20", " "),
         "source" : obj.source,
         "title" : obj.title,
@@ -106,6 +108,7 @@ async function parseRedditData() {
           new RedditModel({
             _id: new mongoose.Types.ObjectId(),
             word: search.replace("%20", " "),
+            api: "Reddit",
             title,
             ups,
             upvote_ratio,
