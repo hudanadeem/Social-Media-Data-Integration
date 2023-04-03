@@ -1,7 +1,7 @@
 import React, {useState, useEffect}from 'react'
 import {Link} from 'react-router-dom'
-import { Button } from './Button';
-import DarkMode from './DarkMode';
+import { Button } from '../Button/Button';
+import DarkMode from '../DarkMode/DarkMode';
 // import '../index.css'
 import './Navbar.css';
 
@@ -45,7 +45,7 @@ function Navbar(){
                             </Link>
                         </li>
                             <DarkMode/>
-                        <li>
+                        <li data-testid="signInButton">
                             <Link to='/sign-ip' className='nav-links-mobile' onClick={closeMobileMenu}>
                                 Sign In
                             </Link>

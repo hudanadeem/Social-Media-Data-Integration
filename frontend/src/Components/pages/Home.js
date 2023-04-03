@@ -2,18 +2,17 @@
 import "../../App.css";
 import "./Home.css";
 // import MainSection from '../MainSection'
-import Post from "../../Post";
+import { Post } from "../Post/Post";
 import { getPosts } from "../.././api/api";
-import Folder from '../../Folder';
-import React, { useState, useEffect } from 'react';
-import moment from 'moment';
+import { Folder } from "../Folder/Folder";
+import React, { useState, useEffect } from "react";
+import moment from "moment";
 import Select from "react-select";
 
-function Home() {
+export const Home = () => {
   const [content, setContent] = useState([]);
   const [filterWord, setFilterWord] = useState("None");
   const [postsIn4Hours, setPostsIn4Hours] = useState(0);
-
 
   const options = [
     { value: "None", label: "None" },
@@ -34,19 +33,19 @@ function Home() {
 
   useEffect(() => {
     getPosts().then((posts) => {
-    setContent(posts);
+      setContent(posts);
 
-    let now = moment().subtract(4, 'hours').unix();
-    console.log(now);
-    let fourHourCount = posts.filter((post) => {
-      if (post.created >= now){
-        return true;
-      }
-      return false;
-    })
-    setPostsIn4Hours(fourHourCount.length);
+      let now = moment().subtract(4, "hours").unix();
+      console.log(now);
+      let fourHourCount = posts.filter((post) => {
+        if (post.created >= now) {
+          return true;
+        }
+        return false;
+      });
+      setPostsIn4Hours(fourHourCount.length);
     });
-}, []);
+  }, []);
 
   const sortedContent = content.sort((a, b) => {
     if (a.word < b.word) {
@@ -80,33 +79,37 @@ function Home() {
 
     getPosts().then((posts) => {
       console.log(posts);
-      posts = posts.filter((post) =>
-        post.word === value
-      );
+      posts = posts.filter((post) => post.word === value);
       console.log(posts);
       setContent(posts);
     });
   }
 
-
   return (
     <>
-      <h1>Posts in last 4 hours including weapons of mass destruction: {postsIn4Hours}</h1>
+      <h1>
+        Posts in last 4 hours including weapons of mass destruction:{" "}
+        {postsIn4Hours}
+      </h1>
       <br />
       <br />
       <h1>Filter for word: </h1>
-      <Select placeholder={filterWord} isSearchable={false} options={options} value={filterWord} onChange={value => onFilterChange(value)}/>
-      <h1>Current word: {filterWord}</h1>
+      <Select
+        placeholder={filterWord}
+        isSearchable={false}
+        options={options}
+        value={filterWord}
+        onChange={(value) => onFilterChange(value)}
+      />
+      <h1>Current word: {filterWord}</h1> 
       <hr />
-      {Object.entries(groupedContent).map(([word, posts]) => (
+       {Object.entries(groupedContent).map(([word, posts]) => (
         <Folder key={word} name={word}>
           {posts.map((post) => (
             <Post key={post._id} post={post} />
           ))}
         </Folder>
-        ))}
-        </>
-    );
-}
-
-export default Home;
+      ))} 
+    </>
+  );
+};
