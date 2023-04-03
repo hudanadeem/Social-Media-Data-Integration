@@ -2,6 +2,7 @@ process.env.NODE_ENV = 'test'
 const connect = require('../connect.js')
 const api = require('../../../src/api/api.js')
 const redditModel = require('../../../src/models/reddit.model.js')
+const newsApiModel = require('../../../src/models/newsapi.model.js')
 const expect = require('chai').expect;
 const mongoose = require("mongoose");
 
@@ -37,7 +38,7 @@ describe('Testing database', () => {
   
 
 
-    it('DB should have nothing initially', async () => {
+    it('DB for the reddit model should have nothing initially', async () => {
         const data = await redditModel.find();
         expect(data).to.eql([]);
     })
@@ -64,6 +65,18 @@ describe('Testing database', () => {
         const data = await redditModel.find();
         expect(data).to.not.equal([]);
     })
+
+    it('DB for the news api model should have nothing initially', async () => {
+      const data = await newsApiModel.find();
+      expect(data).to.eql([]);
+  })
+
+    it('Inserts a post into the database using getNewsApiResults and parseNewsApiData', async () => {
+   
+      await api.parseNewsApiData();
+      const data = await newsApiModel.find();
+      expect(data).to.not.equal([]);
+  })
 
 
     })

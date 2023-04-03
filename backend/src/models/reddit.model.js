@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const redditSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
+  api: String,
   word: String,
   title: String,
   ups: String,
