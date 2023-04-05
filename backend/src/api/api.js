@@ -4,7 +4,7 @@ const axios = require("axios");
 const RedditModel = require("../models/reddit.model");
 const NewsApiModel = require("../models/newsapi.model");
 const mongoose = require("mongoose");
-const newsApiKey = "6ab9a99f47a843f48128b78c55dacc92"
+const newsApiKey = "84f290c6f3b64b09a2847afc2a5aacfb"
 
  const searchTerms = [
    "Nuke",
