@@ -3,7 +3,9 @@ import "../../App.css";
 import "./Home.css";
 // import MainSection from '../MainSection'
 import Post from "../../Post";
+import Result from "../../Result";
 import { getPosts } from "../.././api/api";
+import { getResults } from "../.././api/api";
 import Folder from '../../Folder';
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
@@ -88,6 +90,41 @@ function Home() {
     });
   }
 
+  useEffect(() => {
+    getResults().then((results) => {
+    setContent(results);
+
+    let now = moment().subtract(4, 'hours').unix();
+    console.log(now);
+    let fourHourCount = results.filter((results) => {
+      if (results.created >= now){
+        return true;
+      }
+      return false;
+    })
+    setPostsIn4Hours(fourHourCount.length);
+    });
+  }, []);
+
+  const sortedNews = content.sort((a, b) => {
+    if (a.word < b.word) {
+      return -1;
+    }
+    if (a.word > b.word) {
+      return 1;
+    }
+    return 0;
+  });
+
+  const groupedNews = sortedNews.reduce((groups, result) => {
+    const group = groups[result.word] || [];
+    group.push(result);
+    groups[result.word] = group;
+    return groups;
+  }, {});
+
+  console.log(groupedNews);
+
 
   return (
     <>
@@ -105,6 +142,13 @@ function Home() {
           ))}
         </Folder>
         ))}
+      {Object.entries(groupedNews).map(([word, results]) => (
+      <Folder key={word} name={word}>
+        {results.map((result) => (
+          <Result key={result._id} result={result} />
+        ))}
+      </Folder>
+      ))}
         </>
     );
 }
