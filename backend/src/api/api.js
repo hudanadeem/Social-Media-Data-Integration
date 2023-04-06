@@ -4,22 +4,22 @@ const axios = require("axios");
 const RedditModel = require("../models/reddit.model");
 const NewsApiModel = require("../models/newsapi.model");
 const mongoose = require("mongoose");
-const newsApiKey = "84f290c6f3b64b09a2847afc2a5aacfb"
+const newsApiKey = "b2793bc55c294bee9c33e653476fb649"
 
  const searchTerms = [
    "Nuke",
-   "Nuclear%20Weapon",
-   "ICBM",
-   "Bio-weapon",
-   "Biological%20Warfare",
-   "Anthrax",
-   "Smallpox",
-   "Plague",
-   "Germ%20Warfare",
-   "Chemical%20Weapon",
-   "Nerve%20Weapon",
-   "Asphyxiant%20Weapon",
-   "Nuclear%20Bomb",
+  //  "Nuclear%20Weapon",
+  //  "ICBM",
+  //  "Bio-weapon",
+  //  "Biological%20Warfare",
+  //  "Anthrax",
+  //  "Smallpox",
+  //  "Plague",
+  //  "Germ%20Warfare",
+  //  "Chemical%20Weapon",
+  //  "Nerve%20Weapon",
+  //  "Asphyxiant%20Weapon",
+  //  "Nuclear%20Bomb",
  ];
 //const searchTerms = ["Example"]; // TODO: Remove this and uncomment above
 
