@@ -17,6 +17,12 @@ function Home() {
   const [filterWord, setFilterWord] = useState("None");
   const [postsIn4Hours, setPostsIn4Hours] = useState(0);
 
+  const [isSplit, setIsSplit] = useState(false);
+
+  const toggleSplitScreen = () => {
+    setIsSplit(!isSplit);
+  };
+
 
   const options = [
     { value: "None", label: "None" },
@@ -192,9 +198,45 @@ function Home() {
 
   // console.log(groupedNews);
 
-
   return (
-    <>
+  <>
+      <button class="btn btn--primary" onClick={toggleSplitScreen}>
+        {isSplit ? "Unsplit Screen" : "Split Screen"}
+      </button>
+      {isSplit ? (
+      <>
+        <h1>Posts in last 4 hours including weapons of mass destruction: {postsIn4Hours}</h1>
+        <br />
+        <br />
+        <h1>Filter for word: </h1>
+        <Select placeholder={filterWord} isSearchable={false} options={options} value={filterWord} onChange={value => onFilterChange(value)}/>
+        <h1>Current word: {filterWord}</h1>
+        <hr />
+        <div className="container">
+          <div className="column">
+            {Object.entries(groupedData).map(([word, data]) => (
+              <Folder key={word} name={word}>
+                {data.posts.map((post) => (
+                  <Post key={post._id} post={post} />
+                ))}
+              </Folder>
+            ))}
+          </div>
+          <div className="column">
+            {Object.entries(groupedData).map(([word, data]) => (
+              <Folder key={word} name={word}>
+                {data.results.map((result) => (
+                  <Result key={result._id} result={result} />
+                ))}
+              </Folder>
+            ))}
+          </div>
+        </div>
+      </>
+      ) : (
+
+    <div className="single-column">
+      <>
       <h1>Posts in last 4 hours including weapons of mass destruction: {postsIn4Hours}</h1>
       <br />
       <br />
@@ -210,9 +252,12 @@ function Home() {
         {data.results.map((result) => (
           <Result key={result._id} result={result} />
         ))}
-      </Folder>
-    ))}
-  </>
+        </Folder>
+      ))}
+        </>
+    </div>
+      )}
+      </>
   );
 }
 
