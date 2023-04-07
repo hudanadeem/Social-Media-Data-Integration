@@ -10,6 +10,7 @@ import Folder from '../../Folder';
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import Select from "react-select";
+import Navbar from "../Navbar";
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -22,7 +23,6 @@ function Home() {
   const toggleSplitScreen = () => {
     setIsSplit(!isSplit);
   };
-
 
   const options = [
     { value: "None", label: "None" },
@@ -200,9 +200,10 @@ function Home() {
 
   return (
   <>
-      <button class="btn btn--primary" onClick={toggleSplitScreen}>
-        {isSplit ? "Unsplit Screen" : "Split Screen"}
-      </button>
+     <div>
+      <Navbar isSplit={isSplit} toggleSplitScreen={toggleSplitScreen} />
+      {/* rest of the home page content */}
+    </div>
       {isSplit ? (
       <>
         <h1>Posts in last 4 hours including weapons of mass destruction: {postsIn4Hours}</h1>
@@ -214,6 +215,8 @@ function Home() {
         <hr />
         <div className="container">
           <div className="column">
+          <h1>Reddit</h1>
+          <br />
             {Object.entries(groupedData).map(([word, data]) => (
               <Folder key={word} name={word}>
                 {data.posts.map((post) => (
@@ -223,6 +226,8 @@ function Home() {
             ))}
           </div>
           <div className="column">
+          <h1>News</h1>
+          <br />
             {Object.entries(groupedData).map(([word, data]) => (
               <Folder key={word} name={word}>
                 {data.results.map((result) => (
