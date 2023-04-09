@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test && mocha --recursive --exit  --timeout 100000",
+    "test": "NODE_ENV=test && nyc mocha --recursive --exit  --timeout 100000",
     "testBackend": "nyc mocha --recursive  --exit --timeout 100000",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
