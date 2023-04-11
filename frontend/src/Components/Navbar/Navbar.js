@@ -6,7 +6,7 @@ import DarkMode from '../DarkMode/DarkMode';
 import './Navbar.css';
 
 
-function Navbar(props){
+export const  Navbar = (props) => {
 
     const [click, setClick] = useState(false);
     const[button,setButton] = useState(true);

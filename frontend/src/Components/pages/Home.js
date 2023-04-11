@@ -2,15 +2,15 @@
 import "../../App.css";
 import "./Home.css";
 // import MainSection from '../MainSection'
-import { Post } from "../../Post";
+import { Post } from "../Post/Post"
 import Result from "../../Result";
 import { getPosts } from "../.././api/api";
 import { getResults } from "../.././api/api";
-import { Folder } from '../../Folder';
+import { Folder } from '../Folder/Folder';
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import Select from "react-select";
-import Navbar from "../Navbar";
+import { Navbar } from "../Navbar/Navbar";
 
 export const Home  = () => {
   const [posts, setPosts] = useState([]);
