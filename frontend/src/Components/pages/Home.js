@@ -2,17 +2,17 @@
 import "../../App.css";
 import "./Home.css";
 // import MainSection from '../MainSection'
-import Post from "../../Post";
+import { Post } from "../Post/Post"
 import Result from "../../Result";
 import { getPosts } from "../.././api/api";
 import { getResults } from "../.././api/api";
-import Folder from '../../Folder';
+import { Folder } from '../Folder/Folder';
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import Select from "react-select";
-import Navbar from "../Navbar";
+import { Navbar } from "../Navbar/Navbar";
 
-function Home() {
+export const Home  = () => {
   const [posts, setPosts] = useState([]);
   const [results, setResults] = useState([]);
   const [filterWord, setFilterWord] = useState("None");
@@ -45,17 +45,17 @@ function Home() {
     getPosts().then((posts) => {
     setPosts(posts);
 
-    let now = moment().subtract(4, 'hours').unix();
-    console.log(now);
-    let fourHourCount = posts.filter((post) => {
-      if (post.created >= now){
-        return true;
-      }
-      return false;
-    })
-    setPostsIn4Hours(fourHourCount.length);
+      let now = moment().subtract(4, "hours").unix();
+      console.log(now);
+      let fourHourCount = posts.filter((post) => {
+        if (post.created >= now) {
+          return true;
+        }
+        return false;
+      });
+      setPostsIn4Hours(fourHourCount.length);
     });
-}, []);
+  }, []);
 
   useEffect(() => {
     getResults().then((results) => {
@@ -246,8 +246,14 @@ function Home() {
       <br />
       <br />
       <h1>Filter for word: </h1>
-      <Select placeholder={filterWord} isSearchable={false} options={options} value={filterWord} onChange={value => onFilterChange(value)}/>
-      <h1>Current word: {filterWord}</h1>
+      <Select
+        placeholder={filterWord}
+        isSearchable={false}
+        options={options}
+        value={filterWord}
+        onChange={(value) => onFilterChange(value)}
+      />
+      <h1>Current word: {filterWord}</h1> 
       <hr />
       {Object.entries(groupedData).map(([word, data]) => (
       <Folder key={word} name={word}>
@@ -265,5 +271,3 @@ function Home() {
       </>
   );
 }
-
-export default Home;

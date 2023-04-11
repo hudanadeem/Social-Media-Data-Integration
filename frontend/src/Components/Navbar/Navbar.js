@@ -1,12 +1,12 @@
 import React, {useState, useEffect}from 'react'
 import {Link} from 'react-router-dom'
-import { Button } from './Button';
-import DarkMode from './DarkMode';
+import { Button } from '../Button/Button';
+import DarkMode from '../DarkMode/DarkMode';
 // import '../index.css'
 import './Navbar.css';
 
 
-function Navbar(props){
+export const  Navbar = (props) => {
 
     const [click, setClick] = useState(false);
     const[button,setButton] = useState(true);
@@ -50,7 +50,7 @@ function Navbar(props){
                                 {isSplit ? "Data all together" : "Seperate Data"}
                             </button>
                             <DarkMode/>
-                        <li>
+                        <li data-testid="signInButton">
                             <Link to='/sign-ip' className='nav-links-mobile' onClick={closeMobileMenu}>
                                 Sign In
                             </Link>

@@ -29,7 +29,6 @@ export async function getPosts() {
 
     if (data.posts) {
       posts = data.posts;
-      console.log(posts);
     }
   } catch (e) {
     console.error("Unable to fetch tasks");
