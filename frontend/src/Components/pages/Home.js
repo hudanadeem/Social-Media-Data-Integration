@@ -2,17 +2,27 @@
 import "../../App.css";
 import "./Home.css";
 // import MainSection from '../MainSection'
-import { Post } from "../Post/Post";
+import { Post } from "../../Post";
+import Result from "../../Result";
 import { getPosts } from "../.././api/api";
-import { Folder } from "../Folder/Folder";
-import React, { useState, useEffect } from "react";
-import moment from "moment";
+import { getResults } from "../.././api/api";
+import { Folder } from '../../Folder';
+import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import Select from "react-select";
+import Navbar from "../Navbar";
 
-export const Home = () => {
-  const [content, setContent] = useState([]);
+export const Home  = () => {
+  const [posts, setPosts] = useState([]);
+  const [results, setResults] = useState([]);
   const [filterWord, setFilterWord] = useState("None");
   const [postsIn4Hours, setPostsIn4Hours] = useState(0);
+
+  const [isSplit, setIsSplit] = useState(false);
+
+  const toggleSplitScreen = () => {
+    setIsSplit(!isSplit);
+  };
 
   const options = [
     { value: "None", label: "None" },
@@ -33,7 +43,7 @@ export const Home = () => {
 
   useEffect(() => {
     getPosts().then((posts) => {
-      setContent(posts);
+    setPosts(posts);
 
       let now = moment().subtract(4, "hours").unix();
       console.log(now);
@@ -47,7 +57,30 @@ export const Home = () => {
     });
   }, []);
 
-  const sortedContent = content.sort((a, b) => {
+  useEffect(() => {
+    getResults().then((results) => {
+      setResults(results);
+    });
+  }, []);
+
+  function onFilterChange(value) {
+    value = value.value;
+    setFilterWord(value);
+    if (value === "None") {
+      getPosts().then((posts) => {
+        setPosts(posts);
+      });
+    } else {
+      getPosts().then((posts) => {
+        posts = posts.filter((post) =>
+          post.word === value
+        );
+        setPosts(posts);
+      });
+    }
+  }
+
+  const sortedPosts = posts.sort((a, b) => {
     if (a.word < b.word) {
       return -1;
     }
@@ -57,40 +90,159 @@ export const Home = () => {
     return 0;
   });
 
-  const groupedContent = sortedContent.reduce((groups, post) => {
-    const group = groups[post.word] || [];
-    group.push(post);
+  // const groupedPosts = sortedPosts.reduce((groups, post) => {
+  //   const group = groups[post.word] || [];
+  //   group.push(post);
+  //   groups[post.word] = group;
+  //   return groups;
+  // }, {});
+
+  const sortedResults = results.sort((a, b) => {
+    if (a.word < b.word) {
+      return -1;
+    }
+    if (a.word > b.word) {
+      return 1;
+    }
+    return 0;
+  });
+
+  // const groupedResults = sortedResults.reduce((groups, result) => {
+  //   const group = groups[post.word] || [];
+  //   group.push(post);
+  //   groups[post.word] = group;
+  //   return groups;
+  // }, {});
+
+  const groupedData = sortedPosts.reduce((groups, post) => {
+    const group = groups[post.word] || { posts: [], results: [] };
+    const result = sortedResults.find((result) => result.word === post.word);
+    group.posts.push(post);
+    if (result) {
+      group.results.push(result);
+    }
     groups[post.word] = group;
     return groups;
   }, {});
 
-  console.log(groupedContent);
+  // let sortedData = [];
 
-  function onFilterChange(value) {
-    value = value.value;
-    console.log(value);
-    setFilterWord(value);
-    if (value === "None") {
-      getPosts().then((posts) => {
-        setContent(posts);
-      });
-      return;
-    }
+  // sortedData.forEach((item) => {
+  //   const word = item.word;
+  //   if (!groupedData[word]) {
+  //     groupedData[word] = { results: [], posts: [] };
+  //   }
+  //   if (item.type === "result") {
+  //     groupedData[word].results.push(item);
+  //   } else if (item.type === "post") {
+  //     groupedData[word].posts.push(item);
+  //   }
+  // });
+  
 
-    getPosts().then((posts) => {
-      console.log(posts);
-      posts = posts.filter((post) => post.word === value);
-      console.log(posts);
-      setContent(posts);
-    });
-  }
+  // console.log(groupedContent);
+
+  // function onFilterChange(value) {
+  //   value = value.value;
+  //   console.log(value);
+  //   setFilterWord(value);
+  //   if (value === "None") {
+  //     getPosts().then((posts) => {
+  //       setContent(posts);
+  //     });
+  //     return;
+  //   }
+
+  //   getPosts().then((posts) => {
+  //     console.log(posts);
+  //     posts = posts.filter((post) =>
+  //       post.word === value
+  //     );
+  //     console.log(posts);
+  //     setContent(posts);
+  //   });
+  // }
+
+  // useEffect(() => {
+  //   getResults().then((results) => {
+  //   setContent(results);
+
+  //   let now = moment().subtract(4, 'hours').unix();
+  //   console.log(now);
+  //   let fourHourCount = results.filter((results) => {
+  //     if (results.created >= now){
+  //       return true;
+  //     }
+  //     return false;
+  //   })
+  //   setPostsIn4Hours(fourHourCount.length);
+  //   });
+  // }, []);
+
+  // const sortedNews = content.sort((a, b) => {
+  //   if (a.word < b.word) {
+  //     return -1;
+  //   }
+  //   if (a.word > b.word) {
+  //     return 1;
+  //   }
+  //   return 0;
+  // });
+
+  // const groupedNews = sortedNews.reduce((groups, result) => {
+  //   const group = groups[result.word] || [];
+  //   group.push(result);
+  //   groups[result.word] = group;
+  //   return groups;
+  // }, {});
+
+  // console.log(groupedNews);
 
   return (
-    <>
-      <h1>
-        Posts in last 4 hours including weapons of mass destruction:{" "}
-        {postsIn4Hours}
-      </h1>
+  <>
+     <div>
+      <Navbar isSplit={isSplit} toggleSplitScreen={toggleSplitScreen} />
+      {/* rest of the home page content */}
+    </div>
+      {isSplit ? (
+      <>
+        <h1>Posts in last 4 hours including weapons of mass destruction: {postsIn4Hours}</h1>
+        <br />
+        <br />
+        <h1>Filter for word: </h1>
+        <Select placeholder={filterWord} isSearchable={false} options={options} value={filterWord} onChange={value => onFilterChange(value)}/>
+        <h1>Current word: {filterWord}</h1>
+        <hr />
+        <div className="container">
+          <div className="column">
+          <h1>Reddit</h1>
+          <br />
+            {Object.entries(groupedData).map(([word, data]) => (
+              <Folder key={word} name={word}>
+                {data.posts.map((post) => (
+                  <Post key={post._id} post={post} />
+                ))}
+              </Folder>
+            ))}
+          </div>
+          <div className="column">
+          <h1>News</h1>
+          <br />
+            {Object.entries(groupedData).map(([word, data]) => (
+              <Folder key={word} name={word}>
+                {data.results.map((result) => (
+                  <Result key={result._id} result={result} />
+                ))}
+              </Folder>
+            ))}
+          </div>
+        </div>
+      </>
+      ) : (
+
+    <div className="single-column">
+      <>
+      <h1>Posts in last 4 hours including weapons of mass destruction: {postsIn4Hours}</h1>
       <br />
       <br />
       <h1>Filter for word: </h1>
@@ -103,13 +255,19 @@ export const Home = () => {
       />
       <h1>Current word: {filterWord}</h1> 
       <hr />
-       {Object.entries(groupedContent).map(([word, posts]) => (
-        <Folder key={word} name={word}>
-          {posts.map((post) => (
-            <Post key={post._id} post={post} />
-          ))}
+      {Object.entries(groupedData).map(([word, data]) => (
+      <Folder key={word} name={word}>
+        {data.posts.map((post) => (
+          <Post key={post._id} post={post} />
+        ))}
+        {data.results.map((result) => (
+          <Result key={result._id} result={result} />
+        ))}
         </Folder>
-      ))} 
-    </>
+      ))}
+        </>
+    </div>
+      )}
+      </>
   );
-};
+}

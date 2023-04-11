@@ -38,6 +38,35 @@ export async function getPosts() {
   return posts;
 }
 
+
+export async function getResults() {
+  let results = [];
+  const BASE_URL = getAPIBaseUrl();
+
+  try {
+    console.log("SENDING GET REQUEST to fetch tasks");
+
+    const res = await fetch(`${BASE_URL}/results`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+
+    if (data.results) {
+      results = data.results;
+      console.log(results);
+    }
+  } catch (e) {
+    console.error("Unable to fetch tasks");
+    console.error(e);
+  }
+
+  return results;
+}
+
 export async function getHealth() {
   const BASE_URL = getAPIBaseUrl();
 

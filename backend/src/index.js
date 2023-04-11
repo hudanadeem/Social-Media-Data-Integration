@@ -1,5 +1,6 @@
 const {connect} = require("./db/connect");
 const {parseRedditData} = require("./api/api");
+const {parseNewsApiData} = require("./api/api");
 const app = require("./app");
 
 const PORT = process.env.PORT || 8080;
@@ -18,6 +19,7 @@ connect().then(
 
 
       parseRedditData();
+      parseNewsApiData();                              
 
       //Run API grab hourly
       setInterval(parseRedditData, 1000 * 60 * 60); 

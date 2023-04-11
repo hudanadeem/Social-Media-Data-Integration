@@ -6,7 +6,7 @@ import DarkMode from '../DarkMode/DarkMode';
 import './Navbar.css';
 
 
-function Navbar(){
+function Navbar(props){
 
     const [click, setClick] = useState(false);
     const[button,setButton] = useState(true);
@@ -28,6 +28,8 @@ function Navbar(){
 
     window.addEventListener('resize', showButton);
 
+    const { isSplit, toggleSplitScreen } = props;
+
     return(
         <>
             <nav className='navbar'>
@@ -44,6 +46,9 @@ function Navbar(){
                                 Home
                             </Link>
                         </li>
+                            <button buttonStyle='btn--outline' onClick={toggleSplitScreen}>
+                                {isSplit ? "Data all together" : "Seperate Data"}
+                            </button>
                             <DarkMode/>
                         <li data-testid="signInButton">
                             <Link to='/sign-ip' className='nav-links-mobile' onClick={closeMobileMenu}>

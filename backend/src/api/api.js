@@ -1,7 +1,10 @@
 /* eslint-disable camelcase */
+/* eslint-disable node/no-unsupported-features/es-syntax */
 const axios = require("axios");
 const RedditModel = require("../models/reddit.model");
+const NewsApiModel = require("../models/newsapi.model");
 const mongoose = require("mongoose");
+const newsApiKey = "6188d62e2ce24658b78cd80949059d0b"
 
  const searchTerms = [
    "Nuke",
@@ -19,6 +22,62 @@ const mongoose = require("mongoose");
    "Nuclear%20Bomb",
  ];
 //const searchTerms = ["Example"]; // TODO: Remove this and uncomment above
+
+/**
+ * Gets Post from NewsApi
+ * Stores in mongodb
+ * @param {SearchWord} search is  the keyword to find
+ */
+async function getNewsApiResults(search) {
+  return axios
+    .get(`https://newsapi.org/v2/everything?q=${search}&pagesize=20&apiKey=${newsApiKey}`)
+    .then((response) => response.data)
+    .catch((error) => console.log("Error in fetching data: ", error));
+}
+
+/**
+ * Formats api response to add to mongodb
+ */
+async function parseNewsApiData(){
+  var datas = []
+  for (const search of searchTerms) {
+    const receivedResponse = await getNewsApiResults(search);
+
+    for (let article in receivedResponse.articles){
+      if (article != -1){                             //only for linter
+      const obj = new NewsApiModel({
+        _id: new mongoose.Types.ObjectId(),
+        api: "News",
+        word: search.replace("%20", " "),
+        source: receivedResponse.articles[article].source.name,
+        title: receivedResponse.articles[article].title,
+        url: receivedResponse.articles[article].url,
+        created: receivedResponse.articles[article].publishedAt,
+      })
+    
+
+      const data = 
+      {
+        "_id" : obj.id,
+        "api" : obj.api,
+        "word" : search.replace("%20", " "),
+        "source" : obj.source,
+        "title" : obj.title,
+        "url" : obj.url,
+        "created" : obj.created,
+      }
+
+      //console.log(data)
+      datas.push({...data})
+
+    }
+  }
+
+  }
+
+  return NewsApiModel.insertMany(datas);
+}
+
 
 /**
  * Gets Post from Api
@@ -49,6 +108,7 @@ async function parseRedditData() {
           new RedditModel({
             _id: new mongoose.Types.ObjectId(),
             word: search.replace("%20", " "),
+            api: "Reddit",
             title,
             ups,
             upvote_ratio,
@@ -58,9 +118,11 @@ async function parseRedditData() {
           })
       );
 
+      //console.log(data)
+
     datas.push(...data)
   }
-  return RedditModel.insertMany(datas);
+return RedditModel.insertMany(datas);
 }
 
-module.exports = {parseRedditData, getRedditPosts};
+module.exports = {parseRedditData, getRedditPosts, parseNewsApiData, getNewsApiResults};
