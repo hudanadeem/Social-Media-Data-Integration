@@ -32,6 +32,14 @@ test_server:
     - lint_server
   allow_failure: false
 
+test_frontend:
+  stage: test
+  script:
+    - cd ./frontend
+    - npm install
+    - npm run test
+  allow_failure: false
+
 build-staging-frontend:
   stage: staging
   image:
