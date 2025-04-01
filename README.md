@@ -1,3 +1,49 @@
+# 💥 Mass Destruction Monitor
+
+A full-stack web app that scrapes and visualizes online content mentioning terms related to **mass destruction**, such as "nuclear weapon", "biological warfare", "chemical weapon", etc. 
+
+This app aggregates posts from **Reddit** and **NewsAPI**, stores them in **MongoDB**, and displays them via a React frontend. Built collaboratively by a team of 3 developers.
+
+---
+
+## 🧠 What It Does
+
+- Collects real-time posts/articles containing keywords like:
+- Sources:
+- 🔗 [Reddit](https://www.reddit.com)
+- 📰 [NewsAPI](https://newsapi.org)
+- Stores and categorizes data in MongoDB.
+- Displays the results on a modern frontend UI.
+- Fully containerized using **Docker Compose** (frontend, backend, database).
+
+---
+
+## 🛠️ Technologies Used
+
+- **Frontend:** React.js
+- **Backend:** Node.js + Express
+- **Database:** MongoDB (Mongoose ODM)
+- **APIs:** Reddit (public JSON), NewsAPI.org
+- **Containerization:** Docker & Docker Compose
+
+---
+
+## 🚀 Getting Started
+
+### 📦 Prerequisites
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed
+- Git installed
+
+---
+
+### 🧪 Running the App
+
+1. Clone the repo:
+```bash
+git clone https://github.com/your-username/mass-destruction-monitor.git
+cd mass-destruction-monitor
+```
 # Three Container App with Docker Compose
 
 _this example was created by Anas shahwan and [originally posted on medium.com](https://medium.com/@Anas.shahwan/dockerizing-nodejs-react-js-and-mongodb-apps-be67a73c7a7b)_
