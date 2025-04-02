@@ -41,7 +41,7 @@ This app aggregates posts from **Reddit** and **NewsAPI**, stores them in **Mong
 
 1. Clone the repo:
 ```bash
-git clone https://github.com/your-username/mass-destruction-monitor.git
+git clone https://github.com/hudanadeem/mass-destruction-monitor.git
 cd mass-destruction-monitor
 ```
 # Three Container App with Docker Compose
