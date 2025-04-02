@@ -18,13 +18,47 @@ This app aggregates posts from **Reddit** and **NewsAPI**, stores them in **Mong
 
 ---
 
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack
+<table>
+  <tr>
+    <th>Technology</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" width="30"/> <b>React.js</b></td>
+    <td>Frontend JavaScript library for building user interfaces.</td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg" width="30"/> <b>Node.js</b></td>
+    <td>JavaScript runtime for building scalable network applications.</td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg" width="30"/> <b>Express</b></td>
+    <td>Minimal and flexible Node.js web application framework.</td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg" width="30"/> <b>MongoDB</b></td>
+    <td>NoSQL database for storing and managing data. (with Mongoose ODM)</td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg" width="30"/> <b>Docker</b></td>
+    <td>Platform for developing, shipping, and running applications in containers.</td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg" width="30"/> <b>Docker Compose</b></td>
+    <td>Tool for defining and running multi-container Docker applications.</td>
+  </tr>
+  <tr>
+    <td> <b>Reddit API</b></td>
+    <td>Public JSON API for accessing Reddit data.</td>
+  </tr>
+  <tr>
+    <td><img src="https://newsapi.org/favicon.ico" width="30"/> <b>NewsAPI.org</b></td>
+    <td>API for fetching news articles from various sources.</td>
+  </tr>
+</table>
 
-- **Frontend:** React.js
-- **Backend:** Node.js + Express
-- **Database:** MongoDB (Mongoose ODM)
-- **APIs:** Reddit (public JSON), NewsAPI.org
-- **Containerization:** Docker & Docker Compose
+
 
 ---
 
